@@ -1,0 +1,51 @@
+{
+  "random_state": 42,
+  "rows": 29965,
+  "features": 29,
+  "best_model": "XGBoost",
+  "selection_metric": "Accuracy",
+  "models": {
+    "Logistic Regression": {
+      "checked": "GridSearchCV - StratifiedKFold(3) - Accuracy",
+      "best": "{\"C\": 0.1}",
+      "train_acc": 0.808,
+      "test_acc": 0.8101
+    },
+    "KNN": {
+      "checked": "GridSearchCV - StratifiedKFold(3) - Accuracy",
+      "best": "{\"n_neighbors\": 25}",
+      "train_acc": 0.8209,
+      "test_acc": 0.8108
+    },
+    "Decision Tree": {
+      "checked": "GridSearchCV - StratifiedKFold(3) - Accuracy",
+      "best": "{\"max_depth\": 4}",
+      "train_acc": 0.8217,
+      "test_acc": 0.8186
+    },
+    "Random Forest": {
+      "checked": "GridSearchCV - StratifiedKFold(3) - Accuracy",
+      "best": "{\"max_depth\": 8}",
+      "train_acc": 0.8382,
+      "test_acc": 0.819
+    },
+    "Gradient Boosting": {
+      "checked": "GridSearchCV - StratifiedKFold(3) - Accuracy",
+      "best": "{\"learning_rate\": 0.1, \"n_estimators\": 100}",
+      "train_acc": 0.8277,
+      "test_acc": 0.8188
+    },
+    "XGBoost": {
+      "checked": "GridSearchCV - StratifiedKFold(3) - Accuracy",
+      "best": "{\"learning_rate\": 0.05, \"max_depth\": 4}",
+      "train_acc": 0.8308,
+      "test_acc": 0.8203
+    },
+    "AdaBoost": {
+      "checked": "GridSearchCV - StratifiedKFold(3) - Accuracy",
+      "best": "{\"n_estimators\": 200}",
+      "train_acc": 0.8195,
+      "test_acc": 0.8151
+    }
+  }
+}

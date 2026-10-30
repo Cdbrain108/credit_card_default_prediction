@@ -1,0 +1,70 @@
+{
+  "title": "UCI Default of Credit Card Clients",
+  "subtitle": "Credit-card default prediction · Taiwan, 2005",
+  "summary": "A real-world benchmark containing 30,000 credit-card accounts from Taiwan, used to predict whether a customer will default on their next payment.",
+  "full_description": "WHAT IS THIS DATASET?\nThis is the UCI 'Default of Credit Card Clients' dataset — 30,000 real credit-card accounts from a bank in Taiwan, recorded between April and September 2005. Every row is one cardholder, and the goal is to predict whether that person will default (fail to pay) in the next month.\n\nWHAT IS THE TARGET?\nEach row ends with the column 'default.payment.next.month': 1 means the customer defaulted, 0 means they paid. About 22% of customers default, so the classes are imbalanced — most people pay on time.\n\nWHAT ARE THE ATTRIBUTES?\nThere are 23 raw attributes in 4 natural groups. (1) Demographics — the customer's profile: credit limit, gender, education, marital status and age. (2) Repayment status — PAY_0 to PAY_6, one code per month saying whether that month's bill was paid in full, paid as revolving credit, or paid late (1+ = months late). (3) Billed amounts — BILL_AMT1 to BILL_AMT6, the statement balance at the end of each month. (4) Payments — PAY_AMT1 to PAY_AMT6, the cash the customer actually paid back each month.\n\nWHAT IS EACH ATTRIBUTE FOR?\nThe demographic columns say who the customer is and how much credit the bank trusts them with. The PAY columns are the repayment history — the strongest signal, because a late payment last month says more than any demographic. The BILL columns show how much debt is outstanding, and the PAY_AMT columns show real repayment effort. From these raw columns we also compute 6 engineered ratios (utilization, late months, worst delay, payment-to-bill ratio, debt trend) that turn the history into ready-made risk signals for the models.",
+  "problem_statement": "Given a cardholder's profile, six months of repayment status, monthly statement balances and cash payments, predict whether they will default on the next payment.",
+  "target": {
+    "name": "default.payment.next.month",
+    "positive": "1 = will default next month",
+    "negative": "0 = will pay next month",
+    "default_rate_pct": 22.12
+  },
+  "stats": {
+    "total_clients": 30000,
+    "rows_after_cleaning": 29965,
+    "raw_features": 23,
+    "engineered_features": 6,
+    "model_features": 29,
+    "default_rate_pct": 22.12,
+    "non_default_pct": 77.88,
+    "time_window": "April 2005 – September 2005",
+    "target_column": "default.payment.next.month",
+    "missing_values": 0,
+    "duplicate_rows": 35
+  },
+  "attribute_families": [
+    {
+      "name": "Demographics",
+      "icon": "👤",
+      "columns": "LIMIT_BAL · SEX · EDUCATION · MARRIAGE · AGE",
+      "what": "Who the cardholder is: how much credit the bank approved and their basic profile.",
+      "use": "Sets the trust baseline — bigger limits usually mean safer customers; age and education add small extra signals."
+    },
+    {
+      "name": "Repayment status",
+      "icon": "⏱️",
+      "columns": "PAY_0 · PAY_2 · PAY_3 · PAY_4 · PAY_5 · PAY_6",
+      "what": "One code per month for the last 6 months: -1 paid in full, 0 revolving credit, 1+ = that many months late.",
+      "use": "The strongest signal in the dataset. A late payment last month (PAY_0 ≥ 1) pushes default risk up sharply."
+    },
+    {
+      "name": "Billed amounts",
+      "icon": "🧾",
+      "columns": "BILL_AMT1 · BILL_AMT2 · … · BILL_AMT6",
+      "what": "The statement balance at the end of each of the last 6 months — the debt sitting on the card.",
+      "use": "Shows how much debt is outstanding; against the credit limit it becomes the utilization ratio."
+    },
+    {
+      "name": "Payments",
+      "icon": "💵",
+      "columns": "PAY_AMT1 · PAY_AMT2 · … · PAY_AMT6",
+      "what": "The cash the customer actually paid back in each of the last 6 months.",
+      "use": "Shows real repayment effort — paying a large bill on time is a strong good sign."
+    },
+    {
+      "name": "Behavioral ratios",
+      "icon": "📈",
+      "columns": "credit_utilization · avg_utilization_6m · late_months · max_delay_months · payment_to_bill_ratio · bill_trend_6m",
+      "what": "6 engineered features computed from the raw columns — ready-made financial risk indicators.",
+      "use": "Turn raw history into numbers the models can use directly, which makes every model more accurate."
+    }
+  ],
+  "data_quality": [
+    "0 missing values across all 25 raw columns.",
+    "35 exact duplicate rows; removed during cleaning.",
+    "EDUCATION values 0, 5 and 6 are undocumented; mapped to 4 = Other.",
+    "MARRIAGE value 0 is undocumented; mapped to 3 = Other.",
+    "High-value bills and payments are real bank amounts, so they are kept as outliers."
+  ]
+}

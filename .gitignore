@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+.pytest_cache/
+.streamlit/secrets.toml
+test_out.txt
+data/creditcard.csv
+data/healthcare_fraud_detection.csv
+.DS_Store
+Thumbs.db

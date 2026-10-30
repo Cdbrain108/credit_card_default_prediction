@@ -1,0 +1,238 @@
+{
+  "trained_at": "2026-10-28T11:12:33",
+  "dataset": {
+    "name": "UCI Default of Credit Card Clients",
+    "raw_rows": 30000,
+    "rows": 29965,
+    "raw_features": 23,
+    "engineered_features": 6,
+    "model_features": 29,
+    "default_rate": 0.22125813449023862,
+    "test_rows": 5993
+  },
+  "selection_metric": "test_accuracy",
+  "best_model": "XGBoost",
+  "best_model_file": "best_model.joblib",
+  "best_needs_scale": false,
+  "feature_names": [
+    "LIMIT_BAL",
+    "SEX",
+    "EDUCATION",
+    "MARRIAGE",
+    "AGE",
+    "PAY_0",
+    "PAY_2",
+    "PAY_3",
+    "PAY_4",
+    "PAY_5",
+    "PAY_6",
+    "BILL_AMT1",
+    "BILL_AMT2",
+    "BILL_AMT3",
+    "BILL_AMT4",
+    "BILL_AMT5",
+    "BILL_AMT6",
+    "PAY_AMT1",
+    "PAY_AMT2",
+    "PAY_AMT3",
+    "PAY_AMT4",
+    "PAY_AMT5",
+    "PAY_AMT6",
+    "credit_utilization",
+    "avg_utilization_6m",
+    "late_months",
+    "max_delay_months",
+    "payment_to_bill_ratio",
+    "bill_trend_6m"
+  ],
+  "raw_features": [
+    "LIMIT_BAL",
+    "SEX",
+    "EDUCATION",
+    "MARRIAGE",
+    "AGE",
+    "PAY_0",
+    "PAY_2",
+    "PAY_3",
+    "PAY_4",
+    "PAY_5",
+    "PAY_6",
+    "BILL_AMT1",
+    "BILL_AMT2",
+    "BILL_AMT3",
+    "BILL_AMT4",
+    "BILL_AMT5",
+    "BILL_AMT6",
+    "PAY_AMT1",
+    "PAY_AMT2",
+    "PAY_AMT3",
+    "PAY_AMT4",
+    "PAY_AMT5",
+    "PAY_AMT6"
+  ],
+  "results": {
+    "Logistic Regression": {
+      "model_file": "Logistic_Regression.joblib",
+      "needs_scaling": true,
+      "best_params": {
+        "C": 0.1
+      },
+      "cv_accuracy": 0.8065,
+      "train_accuracy": 0.808,
+      "test_accuracy": 0.8101,
+      "test_precision": 0.6572,
+      "test_recall": 0.2964,
+      "test_f1": 0.4085,
+      "confusion_matrix": [
+        [
+          4462,
+          205
+        ],
+        [
+          933,
+          393
+        ]
+      ]
+    },
+    "KNN": {
+      "model_file": "KNN.joblib",
+      "needs_scaling": true,
+      "best_params": {
+        "n_neighbors": 25
+      },
+      "cv_accuracy": 0.8114,
+      "train_accuracy": 0.8209,
+      "test_accuracy": 0.8108,
+      "test_precision": 0.6333,
+      "test_recall": 0.3439,
+      "test_f1": 0.4457,
+      "confusion_matrix": [
+        [
+          4403,
+          264
+        ],
+        [
+          870,
+          456
+        ]
+      ]
+    },
+    "Decision Tree": {
+      "model_file": "Decision_Tree.joblib",
+      "needs_scaling": false,
+      "best_params": {
+        "max_depth": 4
+      },
+      "cv_accuracy": 0.8202,
+      "train_accuracy": 0.8217,
+      "test_accuracy": 0.8186,
+      "test_precision": 0.7029,
+      "test_recall": 0.3122,
+      "test_f1": 0.4324,
+      "confusion_matrix": [
+        [
+          4492,
+          175
+        ],
+        [
+          912,
+          414
+        ]
+      ]
+    },
+    "Random Forest": {
+      "model_file": "Random_Forest.joblib",
+      "needs_scaling": false,
+      "best_params": {
+        "max_depth": 8
+      },
+      "cv_accuracy": 0.8203,
+      "train_accuracy": 0.8382,
+      "test_accuracy": 0.819,
+      "test_precision": 0.6685,
+      "test_recall": 0.3605,
+      "test_f1": 0.4684,
+      "confusion_matrix": [
+        [
+          4430,
+          237
+        ],
+        [
+          848,
+          478
+        ]
+      ]
+    },
+    "Gradient Boosting": {
+      "model_file": "Gradient_Boosting.joblib",
+      "needs_scaling": false,
+      "best_params": {
+        "learning_rate": 0.1,
+        "n_estimators": 100
+      },
+      "cv_accuracy": 0.8215,
+      "train_accuracy": 0.8277,
+      "test_accuracy": 0.8188,
+      "test_precision": 0.6709,
+      "test_recall": 0.3552,
+      "test_f1": 0.4645,
+      "confusion_matrix": [
+        [
+          4436,
+          231
+        ],
+        [
+          855,
+          471
+        ]
+      ]
+    },
+    "XGBoost": {
+      "model_file": "XGBoost.joblib",
+      "needs_scaling": false,
+      "best_params": {
+        "learning_rate": 0.05,
+        "max_depth": 4
+      },
+      "cv_accuracy": 0.8207,
+      "train_accuracy": 0.8308,
+      "test_accuracy": 0.8203,
+      "test_precision": 0.6766,
+      "test_recall": 0.3597,
+      "test_f1": 0.4697,
+      "confusion_matrix": [
+        [
+          4439,
+          228
+        ],
+        [
+          849,
+          477
+        ]
+      ]
+    },
+    "AdaBoost": {
+      "model_file": "AdaBoost.joblib",
+      "needs_scaling": false,
+      "best_params": {
+        "n_estimators": 200
+      },
+      "cv_accuracy": 0.8195,
+      "train_accuracy": 0.8195,
+      "test_accuracy": 0.8151,
+      "test_precision": 0.6703,
+      "test_recall": 0.3235,
+      "test_f1": 0.4364,
+      "confusion_matrix": [
+        [
+          4456,
+          211
+        ],
+        [
+          897,
+          429
+        ]
+      ]
+    }
+  }
+}
