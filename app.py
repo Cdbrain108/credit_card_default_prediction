@@ -1,18 +1,18 @@
 """
 Credit Card Default Prediction — Streamlit UI
 =============================================
-A deliberately simple two-tab app:
+A simple dark-themed app with two large sidebar navigation buttons:
 
-1. Dataset & Attributes
-    - Immediate dataset overview, problem statement and target explanation
-   - Problem statement, target and data quality notes
-   - Interactive attribute explorer, data dictionary and sample rows
+1. Dataset overview
+   - concise plain-language dataset summary and target chips
+   - attribute-family cards (what each group is and what it is used for)
+   - interactive attribute explorer with precomputed statistics and charts
 
-2. Make a Prediction
+2. Make a prediction
    - 1-click customer profiles + a short input form
-   - Loads the stored joblib weights only (no training in the UI)
-   - Best-model verdict, probability gauge and accuracy %
-   - What every tuned model predicts, with its own test accuracy
+   - a selector for all seven saved models
+   - loads the stored joblib weights only (no training in the UI)
+   - selected-model verdict, probability gauge and test accuracy
 
 Run:
     streamlit run app.py
@@ -30,14 +30,10 @@ import plotly.graph_objects as go
 import streamlit as st
 
 from src.preprocess import (
-    BILL_COLS,
     COLUMN_INFO,
     EDUCATION_LABELS,
     ENGINEERED_FEATURES,
-    FEATURE_COLS,
     MARRIAGE_LABELS,
-    PAYAMT_COLS,
-    PAY_COLS,
     PAY_STATUS_LABELS,
     RAW_FEATURES,
     SEX_LABELS,
@@ -454,24 +450,29 @@ def load_artifacts():
 
 @st.cache_data(show_spinner="Loading dataset...")
 def load_dataset():
+    """Compute the form defaults and the full explorer frame ONCE.
+
+    The frame already contains the 29 model inputs plus the target and its
+    label, so attribute switches never re-run cleaning or feature building.
+    """
     raw = load_data()
     cleaned = clean(raw)
     defaults = form_defaults(raw)
-    return raw, cleaned, defaults
+    explorer = build_features(cleaned)
+    explorer[TARGET] = cleaned[TARGET]
+    explorer["_target_label"] = explorer[TARGET].map({0: "Paid", 1: "Default"})
+    return defaults, explorer
 
 
 try:
     MODELS, SCALER, METRICS, DESCRIPTION = load_artifacts()
-    RAW_DF, CLEANED_DF, DEFAULTS = load_dataset()
+    DEFAULTS, EXPLORER = load_dataset()
 except Exception as exc:
     st.error(f"Could not start the app: {exc}")
     st.stop()
 
 
 BEST_NAME = METRICS.get("best_model", next(iter(MODELS)))
-BEST_INFO = METRICS.get("results", {}).get(BEST_NAME, {})
-BEST_ACC = float(BEST_INFO.get("test_accuracy", 0.0))
-STATS = DESCRIPTION.get("stats", {})
 
 
 # --------------------------------------------------------------------------- #
@@ -575,12 +576,7 @@ if page == "Dataset overview":
     )
 
     info = COLUMN_INFO.get(selected, {})
-    if selected == TARGET:
-        series = CLEANED_DF[TARGET]
-    elif selected in CLEANED_DF.columns:
-        series = CLEANED_DF[selected]
-    else:
-        series = build_features(CLEANED_DF)[selected]
+    series = EXPLORER[selected]
 
     stat_col, chart_col = st.columns([1, 1.55], gap="medium")
     with stat_col:
@@ -619,10 +615,7 @@ if page == "Dataset overview":
         )
 
     with chart_col:
-        chart_df = CLEANED_DF.copy()
-        if selected not in chart_df.columns:
-            chart_df[selected] = series
-        chart_df["_target_label"] = chart_df[TARGET].map({0: "Paid", 1: "Default"})
+        chart_df = EXPLORER
         if selected == TARGET:
             counts = chart_df[TARGET].value_counts().sort_index().reset_index()
             counts.columns = [TARGET, "Count"]
